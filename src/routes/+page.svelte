@@ -3,6 +3,7 @@
 	import { writable } from 'svelte/store';
 	import Overview from '$lib/components/Overview.svelte';
 	import Transactions from '$lib/components/Transactions.svelte'
+	import Coins from '$lib/components/Coins.svelte'
 	const storeTab = writable('overview');
 </script>
 
@@ -15,14 +16,16 @@
 	<Tab value="swaps">Swaps</Tab>
 	<Tab value="games">Games</Tab>
 	<Tab value="transactions">Transactions</Tab>
+	<Tab value="settings">Settings</Tab>
 </TabGroup>
 
 <!-- Conditionally display content -->
 {#if $storeTab === 'overview'}<Overview />{/if}
-{#if $storeTab === 'coins-tokens'}Rawr{/if}
+{#if $storeTab === 'coins-tokens'}<Coins />{/if}
 {#if $storeTab === 'pools'}Pools{/if}
 {#if $storeTab === 'swaps'}Swaps{/if}
 {#if $storeTab === 'games'}Games{/if}
 {#if $storeTab === 'transactions'}<Transactions />{/if}
+{#if $storeTab === 'settings'}Settings{/if}
 </div>
 </div>
