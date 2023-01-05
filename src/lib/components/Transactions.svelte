@@ -14,68 +14,68 @@
 	const dataTableStore = createDataTableStore(sourceData, {
 		sort: '',
 		search: '',
-		pagination: { offset: 0, limit: 5, size: 0, amounts: [1, 2, 5, 10, 20, 50, 100] }
+		pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 50, 100] }
 	});
 	dataTableStore.subscribe((model) => dataTableHandler(model));
 
 	// Manual Selection
-	dataTableStore.select('position', [1]);
+	// dataTableStore.select('position', [1]);
 </script>
 
-		<section class="card !bg-secondary-500/5">
-			<!-- Search Input -->
-			<div class="card-header">
-				<input bind:value={$dataTableStore.search} type="search" placeholder="Search Table..." />
-			</div>
-			<!-- Table -->
-			<div class="p-4">
-				<div class="table-container">
-					<!-- prettier-ignore -->
-					<table class="table table-hover" role="grid" use:tableInteraction use:tableA11y>
-						<thead on:click={(e) => { dataTableStore.sort(e) }} on:keypress>
-							<tr>
-								<!--
-								<th><input type="checkbox" on:click={(e) => { dataTableStore.selectAll(e.currentTarget.checked) }} /></th>
-					 			<th data-sort="id">TX ID</th>  -->
-								<th>From</th>
-								<th>To</th>
-								<th data-sort="title">Type</th>
-								<th data-sort="body">Amount</th>
-								<th class="table-cell-fit"></th>
-							</tr>
-						</thead>
-						<tbody>
-							{#each $dataTableStore.filtered as row, rowIndex}
-								<tr class:table-row-checked={row.dataTableChecked} aria-rowindex={rowIndex + 1}>
-									<!--
-									<td role="gridcell" aria-colindex={1} tabindex="0">
-										<input type="checkbox" bind:checked={row.dataTableChecked} />
-									</td>
-													<td role="gridcell" aria-colindex={2} tabindex="0">
-										<em class="opacity-50">{row.position}</em>
-									</td>  -->
-									<td role="gridcell" aria-colindex={3} tabindex="0">
-										<Avatar src={`https://i.pravatar.cc/?img=${row.position +1}`} width="w-12" /> 
-																				</td>
-																				<td>
-										<Avatar src={`https://i.pravatar.cc/?img=${1}`} width="w-12" /> 
-									</td>
-									<td role="gridcell" aria-colindex={4} tabindex="0" class="md:!whitespace-normal capitalize">
-										{row.symbol}
-									</td>
-									<td role="gridcell" aria-colindex={5} tabindex="0" class="md:!whitespace-normal">
-										{row.weight}
-									</td>
-									<td role="gridcell" aria-colindex={6} tabindex="0" class="table-cell-fit">
-										<button class="btn btn-ghost-surface btn-sm" on:click={()=>{console.log(row,rowIndex)}}>View TX</button>
-									</td>
-								</tr>
-							{/each}
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="card-footer">
-				<Paginator bind:settings={$dataTableStore.pagination} />
-			</div>
-		</section>
+<section class="card">
+	<!-- Search Input -->
+	<div class="card-header">
+		<input bind:value={$dataTableStore.search} type="search" placeholder="Search Transactions..." />
+	</div>
+	<!-- Table -->
+	<div class="p-4">
+		<div class="table-container">
+			<!-- prettier-ignore -->
+			<table class="table table-hover" role="grid" use:tableInteraction use:tableA11y>
+				<thead on:click={(e) => { dataTableStore.sort(e) }} on:keypress>
+					<tr>
+						<!--
+						<th><input type="checkbox" on:click={(e) => { dataTableStore.selectAll(e.currentTarget.checked) }} /></th>
+						<th data-sort="id">TX ID</th>  -->
+						<th>From</th>
+						<th>To</th>
+						<th data-sort="title">Type</th>
+						<th data-sort="body">Amount</th>
+						<th class="table-cell-fit"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each $dataTableStore.filtered as row, rowIndex}
+						<tr class:table-row-checked={row.dataTableChecked} aria-rowindex={rowIndex + 1}>
+							<!--
+							<td role="gridcell" aria-colindex={1} tabindex="0">
+								<input type="checkbox" bind:checked={row.dataTableChecked} />
+							</td>
+											<td role="gridcell" aria-colindex={2} tabindex="0">
+								<em class="opacity-50">{row.position}</em>
+							</td>  -->
+							<td role="gridcell" aria-colindex={3} tabindex="0">
+								<Avatar src={`https://i.pravatar.cc/?img=${row.position +1}`} width="w-12" /> 
+																		</td>
+																		<td>
+								<Avatar src={`https://i.pravatar.cc/?img=${1}`} width="w-12" /> 
+							</td>
+							<td role="gridcell" aria-colindex={4} tabindex="0" class="md:!whitespace-normal capitalize">
+								{row.symbol}
+							</td>
+							<td role="gridcell" aria-colindex={5} tabindex="0" class="md:!whitespace-normal">
+								{row.weight}
+							</td>
+							<td role="gridcell" aria-colindex={6} tabindex="0" class="table-cell-fit">
+								<button class="btn btn-ghost-surface btn-sm" on:click={()=>{console.log(row,rowIndex)}}>View TX</button>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="card-footer">
+		<Paginator bind:settings={$dataTableStore.pagination} />
+	</div>
+</section>
