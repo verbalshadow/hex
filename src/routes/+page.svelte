@@ -4,6 +4,7 @@
 	import Overview from '$lib/components/Overview.svelte';
 	import Transactions from '$lib/components/Transactions.svelte'
 	import Coins from '$lib/components/Coins.svelte'
+	import Settings from '$lib/components/Settings.svelte';
 	const storeTab = writable('overview');
 </script>
 
@@ -26,6 +27,6 @@
 {#if $storeTab === 'swaps'}Swaps{/if}
 {#if $storeTab === 'games'}Games{/if}
 {#if $storeTab === 'transactions'}<Transactions />{/if}
-{#if $storeTab === 'settings'}Settings{/if}
+{#if $storeTab === 'settings'}<Settings />{/if}
 </div>
 </div>
