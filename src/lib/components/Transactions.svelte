@@ -22,7 +22,7 @@
 	// dataTableStore.select('position', [1]);
 </script>
 
-<section class="card">
+<section class="card gap-4 m-4">
 	<!-- Search Input -->
 	<div class="card-header">
 		<input bind:value={$dataTableStore.search} type="search" placeholder="Search Transactions..." />
