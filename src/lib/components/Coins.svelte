@@ -1,16 +1,21 @@
 <script lang="ts">
 	// Components
-	import {Alert, Avatar, Paginator } from '@skeletonlabs/skeleton';
+	import { Alert, Avatar, Paginator } from '@skeletonlabs/skeleton';
 	// Utilities
-	import { createDataTableStore, dataTableHandler, tableInteraction, tableA11y } from '@skeletonlabs/skeleton';
-  const sourceData = [
-	 { position: 1, lastprice: -0.25, amount: 1.0079, symbol: 'HIVE', usd: 245, chart: ""  },
-	 { position: 2, lastprice: 0.25, amount: 4.0026, symbol: 'HBD', usd: 48, chart: ""  },
-	 { position: 3, lastprice: -0.75, amount: 6.941, symbol: 'SWAP.BTC', usd: 2450, chart: ""  },
-	 { position: 4, lastprice: 0.25, amount: 9.0122, symbol: 'INDEX', usd: 1500, chart: ""  },
-	 { position: 5, lastprice: -0.25, amount: 10.811, symbol: 'SPS', usd: 45, chart: "" },
-  ];
-		// Store
+	import {
+		createDataTableStore,
+		dataTableHandler,
+		tableInteraction,
+		tableA11y
+	} from '@skeletonlabs/skeleton';
+	const sourceData = [
+		{ position: 1, lastprice: -0.25, amount: 1.0079, symbol: 'HIVE', usd: 245, chart: '' },
+		{ position: 2, lastprice: 0.25, amount: 4.0026, symbol: 'HBD', usd: 48, chart: '' },
+		{ position: 3, lastprice: -0.75, amount: 6.941, symbol: 'SWAP.BTC', usd: 2450, chart: '' },
+		{ position: 4, lastprice: 0.25, amount: 9.0122, symbol: 'INDEX', usd: 1500, chart: '' },
+		{ position: 5, lastprice: -0.25, amount: 10.811, symbol: 'SPS', usd: 45, chart: '' }
+	];
+	// Store
 	const dataTableStore = createDataTableStore(sourceData, {
 		sort: '',
 		search: '',
