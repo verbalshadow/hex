@@ -6,13 +6,79 @@
 		tableInteraction,
 		tableA11y
 	} from '@skeletonlabs/skeleton';
+
+	const sourceData = [
+		{
+			position: 1,
+			lastprice: -0.25,
+			amount: [
+				{ name: 'Swap.HIVE', total: 2500 },
+				{ name: 'HBD', total: 7500 }
+			],
+			symbol: 'Swap.HIVE:HBD',
+			usd: 245,
+			chart: ''
+		},
+		{
+			position: 2,
+			lastprice: 0.25,
+			amount: [
+				{ name: 'Swap.HIVE', total: 2500 },
+				{ name: 'DEC', total: 7500 }
+			],
+			symbol: 'Swap.HIVE:DEC',
+			usd: 48,
+			chart: ''
+		},
+		{
+			position: 3,
+			lastprice: -0.75,
+			amount: [
+				{ name: 'Swap.HIVE', total: 2500 },
+				{ name: 'SPS', total: 7500 }
+			],
+			symbol: 'Swap.HIVE:SPS',
+			usd: 2450,
+			chart: ''
+		},
+		{
+			position: 4,
+			lastprice: 0.25,
+			amount: [
+				{ name: 'DEC', total: 2500 },
+				{ name: 'SPS', total: 7500 }
+			],
+			symbol: 'DEC:SPS',
+			usd: 1500,
+			chart: ''
+		},
+		{
+			position: 5,
+			lastprice: -0.25,
+			amount: [
+				{ name: 'VOUCHER', total: 2500 },
+				{ name: 'SPS', total: 7500 }
+			],
+			symbol: 'VOUCHER:SPS',
+			usd: 45,
+			chart: ''
+		}
+	];
+	// Store
+	const dataTableStore = createDataTableStore(sourceData, {
+		sort: '',
+		search: '',
+		pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 50, 100] }
+	});
+	dataTableStore.subscribe((model) => dataTableHandler(model));
+
 	let poolList = ['Swap.HIVE:HBD', 'Swap.HIVE:DEC', 'Swap.HIVE:SPS'];
 </script>
 
 <section class="card gap-4 m-4">
 	<!-- Search Input -->
 	<div class="card-header">
-		<input bind:value={$dataTableStore.search} type="search" placeholder="Search Coins/Tokens..." />
+		<input bind:value={$dataTableStore.search} type="search" placeholder="Search Pools..." />
 	</div>
 	<!-- Table -->
 	<div class="p-4">
@@ -25,58 +91,44 @@
 					on:keypress
 				>
 					<tr>
-						<th>Chart</th>
-						<th data-sort="symbol">Name</th>
-						<th data-sort="lastprice">Last Price</th>
-						<th data-sort="amount">Amount</th>
+						<th data-sort="symbol">Pool</th>
+						<th>Amounts</th>
 						<th data-sort="usd">USD</th>
-						<th class="table-cell-fit">Place Order</th>
+						<th class="table-cell-fit">Add Liquidity</th>
 					</tr>
 				</thead>
 				<tbody>
 					{#each $dataTableStore.filtered as row, rowIndex}
 						<tr class:table-row-checked={row.dataTableChecked} aria-rowindex={rowIndex + 1}>
-							<td class="table-cell-fit">
-								{row.chart}
+							<td role="gridcell" aria-colindex={0} tabindex="0">
+								<p class="text-lg">{row.symbol}</p>
 							</td>
-							<td role="gridcell" aria-colindex={3} tabindex="0" class="table-cell-fit">
-								{row.symbol}
+							<td role="gridcell" aria-colindex={1} tabindex="0" class="md:!whitespace-normal flex">
+								<div class="flex-grid-col">
+									<p class="text-lg"><b>{row.amount[0].name}: </b>{row.amount[0].total}</p>
+									<p class="text-lg"><b>{row.amount[1].name}: </b>{row.amount[1].total}</p>
+								</div>
 							</td>
-							<td
-								role="gridcell"
-								aria-colindex={4}
-								tabindex="0"
-								class="md:!whitespace-normal capitalize table-cell-fit"
-							>
-								{row.lastprice}
+							<td>
+								<p class="text-xl">
+									{row.usd}
+								</p>
 							</td>
-							<td
-								role="gridcell"
-								aria-colindex={5}
-								tabindex="0"
-								class="md:!whitespace-normal table-cell-fit"
-							>
-								{row.amount}
-							</td>
-							<td class="table-cell-fit">
-								{row.usd}
-							</td>
-							<td role="gridcell" aria-colindex={6} tabindex="0">
-								<form>
-									<div class="relative">
-										<div
-											class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-										/>
-										<input
-											type="number"
-											id="order"
-											class="block w-full"
-											placeholder="0.000"
-											required
-										/>
-										<button type="submit" class="btn btn-filled-success btn-sm">Buy</button>
-										<button type="submit" class="btn btn-filled-warning btn-sm">Sell</button>
-									</div>
+							<td role="gridcell" aria-colindex={2} tabindex="0" class="table-cell-fit">
+								<form class="flex flex mt-6 space-x-3 w-400">
+									<input
+										type="number"
+										id="order"
+										class="block w-full"
+										placeholder="0.000"
+										required
+									/>
+									<select name="poolcoin" id="poolcoin">
+										{#each row.amount as opt}
+											{opt}
+										{/each}
+									</select>
+									<button type="submit" class="btn btn-filled-success btn-sm">Add</button>
 								</form>
 							</td>
 						</tr>
@@ -90,7 +142,7 @@
 	</div>
 </section>
 
-<div class="card gap-4 m-4 flex w-full justify-right items-center">
+<div class="card gap-4 m-4 p-4 flex w-full justify-right items-center">
 	<form action="addpool">
 		<label for="addpool" class="block m-2">
 			Add Pool
